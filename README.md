@@ -1,5 +1,7 @@
 # ASP.NET Core OAuth 2.0 Demonstrating Proof-of-Possession at the Application Layer (DPoP)
 
+[![.NET](https://github.com/damienbod/DPOP-aspnetcore-idp/actions/workflows/dotnet.yml/badge.svg)](https://github.com/damienbod/DPOP-aspnetcore-idp/actions/workflows/dotnet.yml)
+
 ## Links
 
 https://datatracker.ietf.org/doc/html/draft-ietf-oauth-dpop
