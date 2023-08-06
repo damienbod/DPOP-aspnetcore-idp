@@ -10,4 +10,8 @@ https://darutk.medium.com/illustrated-dpop-oauth-access-token-security-enhanceme
 
 https://github.com/DuendeSoftware/Samples/tree/main/IdentityServer/v6/DPoP
 
+https://github.com/DuendeSoftware/IdentityServer.Templates
+
+
+
 
