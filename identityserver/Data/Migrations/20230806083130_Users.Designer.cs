@@ -8,10 +8,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace IdentityServer.Data.Migrations
+namespace Identityserver.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211227182747_Users")]
+    [Migration("20230806083130_Users")]
     partial class Users
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
