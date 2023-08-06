@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identityserver", "identityserver\Identityserver.csproj", "{0C9A02BB-8CBF-4124-86A3-B958185FFAAC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer", "identityserver\IdentityServer.csproj", "{0C9A02BB-8CBF-4124-86A3-B958185FFAAC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_solutionsFiles", "_solutionsFiles", "{987D7C1A-2964-4FB5-8863-50B02F5ABA72}"
 	ProjectSection(SolutionItems) = preProject

@@ -8,16 +8,17 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Identityserver.Data.Migrations
+namespace IdentityServer.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230806083130_Users")]
+    [Migration("20230806083442_Users")]
     partial class Users
     {
+        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "6.0.0");
+            modelBuilder.HasAnnotation("ProductVersion", "7.0.9");
 
             modelBuilder.Entity("IdentityServer.Models.ApplicationUser", b =>
                 {
