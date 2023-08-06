@@ -8,4 +8,6 @@ https://learn.microsoft.com/en-us/entra/msal/dotnet/advanced/proof-of-possession
 
 https://darutk.medium.com/illustrated-dpop-oauth-access-token-security-enhancement-801680d761ff
 
+https://github.com/DuendeSoftware/Samples/tree/main/IdentityServer/v6/DPoP
+
 
