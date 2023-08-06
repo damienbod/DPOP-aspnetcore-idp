@@ -1,4 +1,4 @@
-# DPOP ASP.NET Core with identity provider
+# ASP.NET Core OAuth 2.0 Demonstrating Proof-of-Possession at the Application Layer (DPoP)
 
 ## Links
 
