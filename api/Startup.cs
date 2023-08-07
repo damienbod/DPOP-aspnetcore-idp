@@ -1,5 +1,4 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
-using IdentityServer4.AccessTokenValidation;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
@@ -30,14 +29,18 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         var stsServer = Configuration["StsServer"];
-        services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
-            .AddIdentityServerAuthentication(options =>
+
+        services.AddAuthentication("dpoptokenscheme")
+            .AddJwtBearer("dpoptokenscheme", options =>
             {
                 options.Authority = stsServer;
-                options.ApiName = "ProtectedApi";
-                options.ApiSecret = "api_in_protected_zone_secret";
-                options.RequireHttpsMetadata = true;
+                options.TokenValidationParameters.ValidateAudience = false;
+                options.MapInboundClaims = false;
+
+                options.TokenValidationParameters.ValidTypes = new[] { "at+jwt" };
             });
+
+        services.ConfigureDPoPTokensForScheme("dpoptokenscheme");
 
         services.AddAuthorization(options =>
             options.AddPolicy("protectedScope", policy =>
@@ -111,7 +114,7 @@ public class Startup
 
         app.UseEndpoints(endpoints =>
         {
-            endpoints.MapControllers();
+            endpoints.MapControllers().RequireAuthorization();
         });
     }
 }
