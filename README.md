@@ -2,6 +2,11 @@
 
 [![.NET](https://github.com/damienbod/DPOP-aspnetcore-idp/actions/workflows/dotnet.yml/badge.svg)](https://github.com/damienbod/DPOP-aspnetcore-idp/actions/workflows/dotnet.yml)
 
+### Debugging
+
+- Identity provider/STS: https://localhost:5001
+- API https://localhost:5005
+
 ## Links
 
 https://datatracker.ietf.org/doc/html/draft-ietf-oauth-dpop
