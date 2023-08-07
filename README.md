@@ -6,6 +6,7 @@
 
 - Identity provider/STS: https://localhost:5001
 - API https://localhost:5005
+- UI https://localhost:5007
 
 ## Links
 
