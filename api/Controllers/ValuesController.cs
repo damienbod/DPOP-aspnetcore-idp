@@ -10,6 +10,14 @@ public class ValuesController : Controller
     [HttpGet]
     public IEnumerable<string> Get()
     {
+        // debugging info
+        var authHeader = Request.Headers.Authorization;
+        var claims = User.Claims.Select(c => new { c.Type, c.Value });
+        var scheme = Request.GetAuthorizationScheme();
+        var proofToken = Request.GetDPoPProofToken();
+
+        var jsonResult = new JsonResult(new { scheme, proofToken, claims });
+
         return new string[] { "data 1 from the second api", "data 2 from the second api" };
     }
 }

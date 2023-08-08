@@ -29,7 +29,6 @@ public class Startup
         {
             options.ExpireTimeSpan = TimeSpan.FromHours(8);
             options.SlidingExpiration = false;
-
             options.Events.OnSigningOut = async e =>
             {
                 await e.HttpContext.RevokeRefreshTokenAsync();
