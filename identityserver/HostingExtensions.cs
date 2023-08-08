@@ -56,7 +56,7 @@ internal static class HostingExtensions
     public static WebApplication ConfigurePipeline(this WebApplication app)
     {
         IdentityModelEventSource.ShowPII = true;
-  
+        
         app.UseSerilogRequestLogging();
     
         if (app.Environment.IsDevelopment())

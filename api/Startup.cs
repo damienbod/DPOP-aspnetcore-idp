@@ -2,6 +2,7 @@
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Logging;
+using Serilog;
 
 namespace Api;
 
@@ -16,6 +17,8 @@ public class Startup
    
     public Startup(IWebHostEnvironment env)
     {
+        JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
         var builder = new ConfigurationBuilder()
             .SetBasePath(env.ContentRootPath)
             .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
@@ -92,6 +95,8 @@ public class Startup
     {
         IdentityModelEventSource.ShowPII = true;
         JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
+        app.UseSerilogRequestLogging();
 
         app.UseSecurityHeaders(
             SecurityHeadersDefinitions.GetHeaderPolicyCollection(env.IsDevelopment()));

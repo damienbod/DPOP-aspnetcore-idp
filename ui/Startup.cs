@@ -1,5 +1,5 @@
 using System.IdentityModel.Tokens.Jwt;
-using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.IdentityModel.Logging;
@@ -9,12 +9,14 @@ namespace WebCodeFlowPkceClient;
 
 public class Startup
 {
-    public Startup(IConfiguration configuration)
+    private IWebHostEnvironment _environment { get; }
+    public IConfiguration Configuration { get; }
+
+    public Startup(IConfiguration configuration, IWebHostEnvironment env)
     {
         Configuration = configuration;
+        _environment = env;
     }
-
-    public IConfiguration Configuration { get; }
 
     public void ConfigureServices(IServiceCollection services)
     {
@@ -58,13 +60,35 @@ public class Startup
             };
         });
 
+        var privatePem = File.ReadAllText(Path.Combine(_environment.ContentRootPath, 
+            "ecdsa384-private.pem"));
+        var publicPem = File.ReadAllText(Path.Combine(_environment.ContentRootPath, 
+            "ecdsa384-public.pem"));
+        var ecdsaCertificate = X509Certificate2.CreateFromPem(publicPem, privatePem);
+        var ecdsaCertificateKey = new ECDsaSecurityKey(ecdsaCertificate.GetECDsaPrivateKey());
+
+        //var privatePem = File.ReadAllText(Path.Combine(_environment.ContentRootPath, 
+        //    "rsa256-private.pem"));
+        //var publicPem = File.ReadAllText(Path.Combine(_environment.ContentRootPath, 
+        //    "rsa256-public.pem"));
+        //var rsaCertificate = X509Certificate2.CreateFromPem(publicPem, privatePem);
+        //var rsaCertificateKey = new RsaSecurityKey(rsaCertificate.GetRSAPrivateKey());
+
         // add automatic token management
         services.AddOpenIdConnectAccessTokenManagement(options =>
         {
             // create and configure a DPoP JWK
-            var rsaKey = new RsaSecurityKey(RSA.Create(2048));
-            var jwk = JsonWebKeyConverter.ConvertFromSecurityKey(rsaKey);
-            jwk.Alg = "PS256";
+            //var rsaKey = new RsaSecurityKey(RSA.Create(2048));
+            //var jwk = JsonWebKeyConverter.ConvertFromSecurityKey(rsaKey);
+            //jwk.Alg = "PS256";
+            //options.DPoPJsonWebKey = JsonSerializer.Serialize(jwk);
+
+            //var jwk = JsonWebKeyConverter.ConvertFromSecurityKey(rsaCertificateKey);
+            //jwk.Alg = "PS256";
+            //options.DPoPJsonWebKey = JsonSerializer.Serialize(jwk);
+
+            var jwk = JsonWebKeyConverter.ConvertFromSecurityKey(ecdsaCertificateKey);
+            jwk.Alg = "ES384";
             options.DPoPJsonWebKey = JsonSerializer.Serialize(jwk);
         });
 
