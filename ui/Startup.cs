@@ -1,8 +1,9 @@
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Cryptography;
+using System.Text.Json;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.IdentityModel.Logging;
+using Microsoft.IdentityModel.Tokens;
 
 namespace WebCodeFlowPkceClient;
 
@@ -17,32 +18,62 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddTransient<IClaimsTransformation, MyClaimsTransformation>();
+        JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
 
         services.AddAuthentication(options =>
         {
-            options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+            options.DefaultScheme = "cookie";
+            options.DefaultChallengeScheme = "oidc";
         })
-        .AddCookie()
-        .AddOpenIdConnect(options =>
+        .AddCookie("cookie", options =>
         {
-            options.SignInScheme = "Cookies";
+            options.ExpireTimeSpan = TimeSpan.FromHours(8);
+            options.SlidingExpiration = false;
+
+            options.Events.OnSigningOut = async e =>
+            {
+                await e.HttpContext.RevokeRefreshTokenAsync();
+            };
+        })
+        .AddOpenIdConnect("oidc", options =>
+        {
             options.Authority = "https://localhost:5001";
-            options.RequireHttpsMetadata = true;
-            options.ClientId = "codeflowpkceclient";
-            options.ClientSecret = "codeflow_pkce_client_secret";
+            options.ClientId = "web-dpop";
+            options.ClientSecret = "ddedF4f289k$3eDa23ed0iTk4Raq&tttk23d08nhzd";
             options.ResponseType = "code";
+            options.ResponseMode = "query";
             options.UsePkce = true;
+
+            options.Scope.Clear();
+            options.Scope.Add("openid");
             options.Scope.Add("profile");
+            options.Scope.Add("scope-dpop");
             options.Scope.Add("offline_access");
-            options.SaveTokens = true;
             options.GetClaimsFromUserInfoEndpoint = true;
-            options.ClaimActions.MapUniqueJsonKey("preferred_username", "preferred_username");
-            options.ClaimActions.MapUniqueJsonKey("gender", "gender");
+            options.SaveTokens = true;
+
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                NameClaimType = "name",
+                RoleClaimType = "role"
+            };
         });
 
-        services.AddAuthorization();
+        // add automatic token management
+        services.AddOpenIdConnectAccessTokenManagement(options =>
+        {
+            // create and configure a DPoP JWK
+            var rsaKey = new RsaSecurityKey(RSA.Create(2048));
+            var jwk = JsonWebKeyConverter.ConvertFromSecurityKey(rsaKey);
+            jwk.Alg = "PS256";
+            options.DPoPJsonWebKey = JsonSerializer.Serialize(jwk);
+        });
+
+        services.AddUserAccessTokenHttpClient("dpop-api-client", configureClient: client =>
+        {
+            client.BaseAddress = new Uri("https://localhost:5005");
+        });
+
         services.AddRazorPages();
     }
 

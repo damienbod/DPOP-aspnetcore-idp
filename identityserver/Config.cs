@@ -23,13 +23,13 @@ public static class Config
             new Client
             {
                 ClientId = "web-dpop",
-                ClientSecrets = { new Secret("ddede2321s+90jjtmDc3/HiNmtKwuBZG9g6hnkqE=ku") },
+                ClientSecrets = { new Secret("ddedF4f289k$3eDa23ed0iTk4Raq&tttk23d08nhzd".Sha256()) },
 
                 AllowedGrantTypes = GrantTypes.CodeAndClientCredentials,
 
-                RedirectUris = { "https://localhost:5001/signin-oidc" },
-                FrontChannelLogoutUri = "https://localhost:5001/signout-oidc",
-                PostLogoutRedirectUris = { "https://localhost:5001/signout-callback-oidc" },
+                RedirectUris = { "https://localhost:5007/signin-oidc" },
+                FrontChannelLogoutUri = "https://localhost:5007/signout-oidc",
+                PostLogoutRedirectUris = { "https://localhost:5007/signout-callback-oidc" },
 
                 AllowOfflineAccess = true,
                 AllowedScopes = { "openid", "profile", "scope-dpop" }
