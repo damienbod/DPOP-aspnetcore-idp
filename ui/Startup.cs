@@ -61,27 +61,27 @@ public class Startup
             };
         });
 
-        //var privatePem = File.ReadAllText(
-        //    Path.Combine(_environment.ContentRootPath, "ecdsa384-private.pem"));
-
-        //var publicPem = File.ReadAllText(
-        // Path.Combine(_environment.ContentRootPath, "ecdsa384-public.pem"));
-
-        //var ecdsaCertificate = X509Certificate2.CreateFromPem(
-        //       publicPem, privatePem);
-        //ECDsaSecurityKey ecdsaCertificateKey
-        //    = new ECDsaSecurityKey(ecdsaCertificate.GetECDsaPrivateKey());
-
         var privatePem = File.ReadAllText(
-            Path.Combine(_environment.ContentRootPath, "rsa256-private.pem"));
+            Path.Combine(_environment.ContentRootPath, "ecdsa384-private.pem"));
 
         var publicPem = File.ReadAllText(
-         Path.Combine(_environment.ContentRootPath, "rsa256-public.pem"));
+         Path.Combine(_environment.ContentRootPath, "ecdsa384-public.pem"));
 
-        var rsaCertificate = X509Certificate2.CreateFromPem(
+        var ecdsaCertificate = X509Certificate2.CreateFromPem(
                publicPem, privatePem);
-        RsaSecurityKey rsaCertificateKey
-            = new RsaSecurityKey(rsaCertificate.GetRSAPrivateKey());
+        ECDsaSecurityKey ecdsaCertificateKey
+            = new ECDsaSecurityKey(ecdsaCertificate.GetECDsaPrivateKey());
+
+        //var privatePem = File.ReadAllText(
+        //    Path.Combine(_environment.ContentRootPath, "rsa256-private.pem"));
+
+        //var publicPem = File.ReadAllText(
+        // Path.Combine(_environment.ContentRootPath, "rsa256-public.pem"));
+
+        //var rsaCertificate = X509Certificate2.CreateFromPem(
+        //       publicPem, privatePem);
+        //RsaSecurityKey rsaCertificateKey
+        //    = new RsaSecurityKey(rsaCertificate.GetRSAPrivateKey());
 
         // add automatic token management
         services.AddOpenIdConnectAccessTokenManagement(options =>
@@ -92,15 +92,13 @@ public class Startup
             //jwk.Alg = "PS256";
             //options.DPoPJsonWebKey = JsonSerializer.Serialize(jwk);
 
-            var jwk = JsonWebKeyConverter.ConvertFromSecurityKey(rsaCertificateKey);
-            jwk.Alg = "PS256";
-            options.DPoPJsonWebKey = JsonSerializer.Serialize(jwk);
-
-            // 401 bug, to fix
-            //var jwk = JsonWebKeyConverter.ConvertFromSecurityKey(ecdsaCertificateKey);
-            //jwk.Alg = "ES384";
+            //var jwk = JsonWebKeyConverter.ConvertFromSecurityKey(rsaCertificateKey);
+            //jwk.Alg = "PS256";
             //options.DPoPJsonWebKey = JsonSerializer.Serialize(jwk);
 
+            var jwk = JsonWebKeyConverter.ConvertFromSecurityKey(ecdsaCertificateKey);
+            jwk.Alg = "ES384";
+            options.DPoPJsonWebKey = JsonSerializer.Serialize(jwk);
         });
 
         services.AddUserAccessTokenHttpClient("dpop-api-client", configureClient: client =>
