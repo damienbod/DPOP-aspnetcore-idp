@@ -45,7 +45,7 @@ public class Startup
         services.AddAuthorization(options =>
             options.AddPolicy("protectedScope", policy =>
             {
-                policy.RequireClaim("scope", "scope_used_for_api_in_protected_zone");
+                policy.RequireClaim("scope", "scope-dpop");
             })
         );
 
