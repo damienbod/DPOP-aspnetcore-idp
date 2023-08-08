@@ -49,7 +49,7 @@ public class Program
             .UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration
                 .ReadFrom.Configuration(hostingContext.Configuration)
                 .Enrich.FromLogContext()
-                .WriteTo.File("../_webCodeFlowPkceClient.txt")
+                .WriteTo.File("../_logs-webCodeFlowPkceClient.txt")
                 .WriteTo.Console(theme: AnsiConsoleTheme.Code)
             )
             .ConfigureWebHostDefaults(webBuilder =>

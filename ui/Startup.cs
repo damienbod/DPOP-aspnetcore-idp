@@ -9,7 +9,7 @@ namespace WebCodeFlowPkceClient;
 
 public class Startup
 {
-    private IWebHostEnvironment _environment { get; }
+    private readonly IWebHostEnvironment _environment;
     public IConfiguration Configuration { get; }
 
     public Startup(IConfiguration configuration, IWebHostEnvironment env)
