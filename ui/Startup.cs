@@ -1,5 +1,4 @@
 using System.IdentityModel.Tokens.Jwt;
-using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
 using Microsoft.AspNetCore.Authentication;
@@ -61,27 +60,19 @@ public class Startup
             };
         });
 
-        var privatePem = File.ReadAllText(
-            Path.Combine(_environment.ContentRootPath, "ecdsa384-private.pem"));
+        var privatePem = File.ReadAllText(Path.Combine(_environment.ContentRootPath, 
+            "ecdsa384-private.pem"));
+        var publicPem = File.ReadAllText(Path.Combine(_environment.ContentRootPath, 
+            "ecdsa384-public.pem"));
+        var ecdsaCertificate = X509Certificate2.CreateFromPem(publicPem, privatePem);
+        var ecdsaCertificateKey = new ECDsaSecurityKey(ecdsaCertificate.GetECDsaPrivateKey());
 
-        var publicPem = File.ReadAllText(
-         Path.Combine(_environment.ContentRootPath, "ecdsa384-public.pem"));
-
-        var ecdsaCertificate = X509Certificate2.CreateFromPem(
-               publicPem, privatePem);
-        ECDsaSecurityKey ecdsaCertificateKey
-            = new ECDsaSecurityKey(ecdsaCertificate.GetECDsaPrivateKey());
-
-        //var privatePem = File.ReadAllText(
-        //    Path.Combine(_environment.ContentRootPath, "rsa256-private.pem"));
-
-        //var publicPem = File.ReadAllText(
-        // Path.Combine(_environment.ContentRootPath, "rsa256-public.pem"));
-
-        //var rsaCertificate = X509Certificate2.CreateFromPem(
-        //       publicPem, privatePem);
-        //RsaSecurityKey rsaCertificateKey
-        //    = new RsaSecurityKey(rsaCertificate.GetRSAPrivateKey());
+        //var privatePem = File.ReadAllText(Path.Combine(_environment.ContentRootPath, 
+        //    "rsa256-private.pem"));
+        //var publicPem = File.ReadAllText(Path.Combine(_environment.ContentRootPath, 
+        //    "rsa256-public.pem"));
+        //var rsaCertificate = X509Certificate2.CreateFromPem(publicPem, privatePem);
+        //var rsaCertificateKey = new RsaSecurityKey(rsaCertificate.GetRSAPrivateKey());
 
         // add automatic token management
         services.AddOpenIdConnectAccessTokenManagement(options =>
