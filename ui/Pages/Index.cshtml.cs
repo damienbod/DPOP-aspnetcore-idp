@@ -21,7 +21,7 @@ public class IndexModel : PageModel
     {
         var claims = User.Claims.ToList();
 
-        var client = _httpClientFactory.CreateClient("client");
+        var client = _httpClientFactory.CreateClient("dpop-api-client");
 
         var response = await client.GetStringAsync("api/values");
     }
