@@ -1,0 +1,118 @@
+2023-08-08 22:41:37.517 +02:00 [DBG] Hosting starting
+2023-08-08 22:41:37.645 +02:00 [INF] User profile is available. Using 'C:\Users\damien.bowden\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2023-08-08 22:41:37.687 +02:00 [DBG] Reading data from file 'C:\Users\damien.bowden\AppData\Local\ASP.NET\DataProtection-Keys\key-04c73800-881f-4d37-986f-e3a2e24c6d62.xml'.
+2023-08-08 22:41:37.693 +02:00 [DBG] Reading data from file 'C:\Users\damien.bowden\AppData\Local\ASP.NET\DataProtection-Keys\key-2266f5e5-28e1-40ea-9769-9b518e29f239.xml'.
+2023-08-08 22:41:37.694 +02:00 [DBG] Reading data from file 'C:\Users\damien.bowden\AppData\Local\ASP.NET\DataProtection-Keys\key-61d21e9b-1591-4eb5-be0a-ee13d8061e5a.xml'.
+2023-08-08 22:41:37.695 +02:00 [DBG] Reading data from file 'C:\Users\damien.bowden\AppData\Local\ASP.NET\DataProtection-Keys\key-760399f9-c312-46b9-b50a-33a2cfb07480.xml'.
+2023-08-08 22:41:37.696 +02:00 [DBG] Reading data from file 'C:\Users\damien.bowden\AppData\Local\ASP.NET\DataProtection-Keys\key-9d4299ed-ce87-44f5-a633-8e954de65334.xml'.
+2023-08-08 22:41:37.697 +02:00 [DBG] Reading data from file 'C:\Users\damien.bowden\AppData\Local\ASP.NET\DataProtection-Keys\key-9f2d0842-15fa-4f4d-abf7-df6f066b3ae9.xml'.
+2023-08-08 22:41:37.698 +02:00 [DBG] Reading data from file 'C:\Users\damien.bowden\AppData\Local\ASP.NET\DataProtection-Keys\key-c590f6ed-744d-4b96-aaae-d535747ddff3.xml'.
+2023-08-08 22:41:37.699 +02:00 [DBG] Reading data from file 'C:\Users\damien.bowden\AppData\Local\ASP.NET\DataProtection-Keys\key-d0146d4a-028e-49fc-9b4e-402571bb6180.xml'.
+2023-08-08 22:41:37.700 +02:00 [DBG] Reading data from file 'C:\Users\damien.bowden\AppData\Local\ASP.NET\DataProtection-Keys\key-e4570dbe-cb15-4ba6-8107-86fd09f15e98.xml'.
+2023-08-08 22:41:37.702 +02:00 [DBG] Reading data from file 'C:\Users\damien.bowden\AppData\Local\ASP.NET\DataProtection-Keys\key-f1ded647-d5d1-4bc8-ba60-103daa35bb0c.xml'.
+2023-08-08 22:41:37.722 +02:00 [DBG] Found key {04c73800-881f-4d37-986f-e3a2e24c6d62}.
+2023-08-08 22:41:37.728 +02:00 [DBG] Found key {2266f5e5-28e1-40ea-9769-9b518e29f239}.
+2023-08-08 22:41:37.729 +02:00 [DBG] Found key {61d21e9b-1591-4eb5-be0a-ee13d8061e5a}.
+2023-08-08 22:41:37.729 +02:00 [DBG] Found key {760399f9-c312-46b9-b50a-33a2cfb07480}.
+2023-08-08 22:41:37.730 +02:00 [DBG] Found key {9d4299ed-ce87-44f5-a633-8e954de65334}.
+2023-08-08 22:41:37.730 +02:00 [DBG] Found key {9f2d0842-15fa-4f4d-abf7-df6f066b3ae9}.
+2023-08-08 22:41:37.731 +02:00 [DBG] Found key {c590f6ed-744d-4b96-aaae-d535747ddff3}.
+2023-08-08 22:41:37.731 +02:00 [DBG] Found key {d0146d4a-028e-49fc-9b4e-402571bb6180}.
+2023-08-08 22:41:37.732 +02:00 [DBG] Found key {e4570dbe-cb15-4ba6-8107-86fd09f15e98}.
+2023-08-08 22:41:37.733 +02:00 [DBG] Found key {f1ded647-d5d1-4bc8-ba60-103daa35bb0c}.
+2023-08-08 22:41:37.738 +02:00 [DBG] Considering key {c590f6ed-744d-4b96-aaae-d535747ddff3} with expiration date 2023-09-15 07:26:10Z as default key.
+2023-08-08 22:41:37.741 +02:00 [DBG] Forwarded activator type request from Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Version=7.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+2023-08-08 22:41:37.744 +02:00 [DBG] Decrypting secret element using Windows DPAPI.
+2023-08-08 22:41:37.747 +02:00 [DBG] Forwarded activator type request from Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Version=7.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+2023-08-08 22:41:37.751 +02:00 [DBG] Opening CNG algorithm 'AES' from provider 'null' with chaining mode CBC.
+2023-08-08 22:41:37.753 +02:00 [DBG] Opening CNG algorithm 'SHA256' from provider 'null' with HMAC.
+2023-08-08 22:41:37.755 +02:00 [DBG] Using key {c590f6ed-744d-4b96-aaae-d535747ddff3} as the default key.
+2023-08-08 22:41:37.756 +02:00 [DBG] Key ring with default key {c590f6ed-744d-4b96-aaae-d535747ddff3} was loaded during application startup.
+2023-08-08 22:41:38.079 +02:00 [DBG] Registered model binder providers, in the following order: ["Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BinderTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ServicesModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.HeaderModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FloatingPointTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.EnumTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DateTimeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.TryParseModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CancellationTokenModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ByteArrayModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormFileModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormCollectionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.KeyValuePairModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DictionaryModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ArrayModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CollectionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ComplexObjectModelBinderProvider"]
+2023-08-08 22:41:38.398 +02:00 [INF] Now listening on: https://localhost:5005
+2023-08-08 22:41:38.399 +02:00 [DBG] Loaded hosting startup assembly Api
+2023-08-08 22:41:38.400 +02:00 [DBG] Loaded hosting startup assembly Microsoft.AspNetCore.Watch.BrowserRefresh
+2023-08-08 22:41:38.401 +02:00 [DBG] Loaded hosting startup assembly Microsoft.WebTools.BrowserLink.Net
+2023-08-08 22:41:38.403 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2023-08-08 22:41:38.403 +02:00 [INF] Hosting environment: Development
+2023-08-08 22:41:38.404 +02:00 [INF] Content root path: C:\repos\git\damienbod\DPOP-aspnetcore-idp\api
+2023-08-08 22:41:38.404 +02:00 [DBG] Hosting started
+2023-08-08 22:41:38.808 +02:00 [DBG] Connection id "0HMSO9VEN26E0" accepted.
+2023-08-08 22:41:38.809 +02:00 [DBG] Connection id "0HMSO9VEN26E0" received FIN.
+2023-08-08 22:41:38.828 +02:00 [DBG] Connection id "0HMSO9VEN26E0" started.
+2023-08-08 22:41:39.029 +02:00 [DBG] Failed to authenticate HTTPS connection.
+System.IO.IOException:  Received an unexpected EOF or 0 bytes from the transport stream.
+   at System.Net.Security.SslStream.ReceiveBlobAsync[TIOAdapter](CancellationToken cancellationToken)
+   at System.Net.Security.SslStream.ForceAuthenticationAsync[TIOAdapter](Boolean receiveFirst, Byte[] reAuthenticationData, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Https.Internal.HttpsConnectionMiddleware.OnConnectionAsync(ConnectionContext context)
+2023-08-08 22:41:39.085 +02:00 [DBG] Connection id "0HMSO9VEN26E0" stopped.
+2023-08-08 22:41:39.095 +02:00 [DBG] Connection id "0HMSO9VEN26E0" sending FIN because: "The Socket transport's send loop completed gracefully."
+2023-08-08 22:41:39.382 +02:00 [DBG] Connection id "0HMSO9VEN26E1" accepted.
+2023-08-08 22:41:39.385 +02:00 [DBG] Connection id "0HMSO9VEN26E1" started.
+2023-08-08 22:41:39.487 +02:00 [DBG] Connection 0HMSO9VEN26E1 established using the following protocol: "Tls12"
+2023-08-08 22:41:39.609 +02:00 [INF] Request starting HTTP/2 GET https://localhost:5005/swagger/index.html - -
+2023-08-08 22:41:39.651 +02:00 [DBG] Wildcard detected, all requests with hosts will be allowed.
+2023-08-08 22:41:41.638 +02:00 [DBG] Response markup is scheduled to include browser refresh script injection.
+2023-08-08 22:41:41.708 +02:00 [INF] HTTP GET /swagger/index.html responded 200 in 2050.2248 ms
+2023-08-08 22:41:41.715 +02:00 [DBG] Response markup was updated to include browser refresh script injection.
+2023-08-08 22:41:41.720 +02:00 [INF] Request finished HTTP/2 GET https://localhost:5005/swagger/index.html - - - 200 - text/html;charset=utf-8 2114.1268ms
+2023-08-08 22:41:41.794 +02:00 [INF] Request starting HTTP/2 GET https://localhost:5005/_framework/aspnetcore-browser-refresh.js - -
+2023-08-08 22:41:41.801 +02:00 [INF] Request finished HTTP/2 GET https://localhost:5005/_framework/aspnetcore-browser-refresh.js - - - 200 12338 application/javascript;+charset=utf-8 7.0323ms
+2023-08-08 22:41:42.051 +02:00 [INF] Request starting HTTP/2 GET https://localhost:5005/swagger/v1/swagger.json - -
+2023-08-08 22:41:42.996 +02:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 942.9384 ms
+2023-08-08 22:41:42.998 +02:00 [INF] Request finished HTTP/2 GET https://localhost:5005/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 946.5527ms
+2023-08-08 22:41:45.043 +02:00 [DBG] Connection id "0HMSO9VEN26E2" accepted.
+2023-08-08 22:41:45.044 +02:00 [DBG] Connection id "0HMSO9VEN26E2" started.
+2023-08-08 22:41:45.054 +02:00 [DBG] Connection 0HMSO9VEN26E2 established using the following protocol: "Tls12"
+2023-08-08 22:41:45.065 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:5005/api/values - -
+2023-08-08 22:41:45.072 +02:00 [DBG] The request path  does not match the path filter
+2023-08-08 22:41:45.100 +02:00 [DBG] 1 candidate(s) found for the request path '/api/values'
+2023-08-08 22:41:45.104 +02:00 [DBG] Endpoint 'Api.Controllers.ValuesController.Get (Api)' with route pattern 'api/Values' is valid for the request path '/api/values'
+2023-08-08 22:41:45.105 +02:00 [DBG] Request matched endpoint 'Api.Controllers.ValuesController.Get (Api)'
+2023-08-08 22:41:45.156 +02:00 [DBG] AuthenticationScheme: dpoptokenscheme was not authenticated.
+2023-08-08 22:41:45.170 +02:00 [INF] Authorization failed. These requirements were not met:
+ClaimsAuthorizationRequirement:Claim.Type=scope and Claim.Value is one of the following values: (scope-dpop)
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2023-08-08 22:41:45.184 +02:00 [INF] AuthenticationScheme: dpoptokenscheme was challenged.
+2023-08-08 22:41:45.186 +02:00 [INF] HTTP GET /api/values responded 401 in 116.1855 ms
+2023-08-08 22:41:45.202 +02:00 [DBG] Connection id "0HMSO9VEN26E2" completed keep alive response.
+2023-08-08 22:41:45.204 +02:00 [INF] Request finished HTTP/1.1 GET https://localhost:5005/api/values - - - 401 0 - 138.8826ms
+2023-08-08 22:41:45.447 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:5005/api/values - -
+2023-08-08 22:41:45.450 +02:00 [DBG] The request path  does not match the path filter
+2023-08-08 22:41:45.452 +02:00 [DBG] 1 candidate(s) found for the request path '/api/values'
+2023-08-08 22:41:45.455 +02:00 [DBG] Endpoint 'Api.Controllers.ValuesController.Get (Api)' with route pattern 'api/Values' is valid for the request path '/api/values'
+2023-08-08 22:41:45.457 +02:00 [DBG] Request matched endpoint 'Api.Controllers.ValuesController.Get (Api)'
+2023-08-08 22:41:45.466 +02:00 [DBG] AuthenticationScheme: dpoptokenscheme was not authenticated.
+2023-08-08 22:41:45.471 +02:00 [INF] Authorization failed. These requirements were not met:
+ClaimsAuthorizationRequirement:Claim.Type=scope and Claim.Value is one of the following values: (scope-dpop)
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2023-08-08 22:41:45.480 +02:00 [INF] AuthenticationScheme: dpoptokenscheme was challenged.
+2023-08-08 22:41:45.486 +02:00 [INF] HTTP GET /api/values responded 401 in 36.2704 ms
+2023-08-08 22:41:45.493 +02:00 [DBG] Connection id "0HMSO9VEN26E2" completed keep alive response.
+2023-08-08 22:41:45.495 +02:00 [INF] Request finished HTTP/1.1 GET https://localhost:5005/api/values - - - 401 0 - 47.5341ms
+2023-08-08 22:41:53.552 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:5005/api/values - -
+2023-08-08 22:41:53.554 +02:00 [DBG] The request path  does not match the path filter
+2023-08-08 22:41:53.554 +02:00 [DBG] 1 candidate(s) found for the request path '/api/values'
+2023-08-08 22:41:53.556 +02:00 [DBG] Endpoint 'Api.Controllers.ValuesController.Get (Api)' with route pattern 'api/Values' is valid for the request path '/api/values'
+2023-08-08 22:41:53.557 +02:00 [DBG] Request matched endpoint 'Api.Controllers.ValuesController.Get (Api)'
+2023-08-08 22:41:53.560 +02:00 [DBG] AuthenticationScheme: dpoptokenscheme was not authenticated.
+2023-08-08 22:41:53.562 +02:00 [INF] Authorization failed. These requirements were not met:
+ClaimsAuthorizationRequirement:Claim.Type=scope and Claim.Value is one of the following values: (scope-dpop)
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2023-08-08 22:41:53.563 +02:00 [INF] AuthenticationScheme: dpoptokenscheme was challenged.
+2023-08-08 22:41:53.564 +02:00 [INF] HTTP GET /api/values responded 401 in 10.9749 ms
+2023-08-08 22:41:53.566 +02:00 [DBG] Connection id "0HMSO9VEN26E2" completed keep alive response.
+2023-08-08 22:41:53.568 +02:00 [INF] Request finished HTTP/1.1 GET https://localhost:5005/api/values - - - 401 0 - 16.3856ms
+2023-08-08 22:41:53.709 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:5005/api/values - -
+2023-08-08 22:41:53.710 +02:00 [DBG] The request path  does not match the path filter
+2023-08-08 22:41:53.712 +02:00 [DBG] 1 candidate(s) found for the request path '/api/values'
+2023-08-08 22:41:53.713 +02:00 [DBG] Endpoint 'Api.Controllers.ValuesController.Get (Api)' with route pattern 'api/Values' is valid for the request path '/api/values'
+2023-08-08 22:41:53.714 +02:00 [DBG] Request matched endpoint 'Api.Controllers.ValuesController.Get (Api)'
+2023-08-08 22:41:53.715 +02:00 [DBG] AuthenticationScheme: dpoptokenscheme was not authenticated.
+2023-08-08 22:41:53.716 +02:00 [INF] Authorization failed. These requirements were not met:
+ClaimsAuthorizationRequirement:Claim.Type=scope and Claim.Value is one of the following values: (scope-dpop)
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2023-08-08 22:41:53.718 +02:00 [INF] AuthenticationScheme: dpoptokenscheme was challenged.
+2023-08-08 22:41:53.719 +02:00 [INF] HTTP GET /api/values responded 401 in 8.5193 ms
+2023-08-08 22:41:53.720 +02:00 [DBG] Connection id "0HMSO9VEN26E2" completed keep alive response.
+2023-08-08 22:41:53.721 +02:00 [INF] Request finished HTTP/1.1 GET https://localhost:5005/api/values - - - 401 0 - 12.0468ms

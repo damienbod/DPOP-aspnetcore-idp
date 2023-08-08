@@ -9,6 +9,7 @@ namespace GenerateCertiticate;
 class Program
 {
     static CreateCertificates? _cc;
+    static ImportExportCertificate? _iec;
     static void Main(string[] args)
     {
         var sp = new ServiceCollection()
@@ -16,18 +17,30 @@ class Program
            .BuildServiceProvider();
 
         _cc = sp.GetService<CreateCertificates>()!;
+        _iec = sp.GetService<ImportExportCertificate>()!;
 
         var rsaCert = CreateRsaCertificate("localhost", 10);
         var ecdsaCert = CreateECDsaCertificate("localhost", 10);
 
-        string password = "1234";
         var iec = sp.GetService<ImportExportCertificate>();
 
-        var rsaCertPfxBytes = iec!.ExportSelfSignedCertificatePfx(password, rsaCert);
-        File.WriteAllBytes("cert_rsa512.pfx", rsaCertPfxBytes);
+        var pemPublicRsaKey = _iec.PemExportPublicKeyCertificate(rsaCert);
+        File.WriteAllText("rsa256-public.pem", pemPublicRsaKey);
 
-        var ecdsaCertPfxBytes = iec.ExportSelfSignedCertificatePfx(password, ecdsaCert);
-        File.WriteAllBytes("cert_ecdsa384.pfx", ecdsaCertPfxBytes);
+        using (RSA? rsa = rsaCert.GetRSAPrivateKey())
+        {
+            var pemPrivateRsaKey = rsa!.ExportRSAPrivateKeyPem();
+            File.WriteAllText("rsa256-private.pem", pemPrivateRsaKey);
+        }
+
+        var pemPublicKey = _iec.PemExportPublicKeyCertificate(ecdsaCert);
+        File.WriteAllText("ecdsa384-public.pem", pemPublicKey);
+
+        using (ECDsa? ecdsa = ecdsaCert.GetECDsaPrivateKey())
+        {
+            var pemPrivateKey = ecdsa!.ExportECPrivateKeyPem();
+            File.WriteAllText("ecdsa384-private.pem", pemPrivateKey);
+        }
 
         Console.WriteLine("created");
     }
@@ -76,7 +89,7 @@ class Program
             new RsaConfiguration
             {
                 KeySize = 2048,
-                HashAlgorithmName = HashAlgorithmName.SHA512
+                HashAlgorithmName = HashAlgorithmName.SHA256
             });
 
         return certificate;

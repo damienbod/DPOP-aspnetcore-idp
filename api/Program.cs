@@ -10,7 +10,7 @@ public class Program
     {
         Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Debug()
-            .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+            .MinimumLevel.Override("Microsoft", LogEventLevel.Debug)
             .Enrich.FromLogContext()
             .WriteTo.Console()
             .CreateLogger();
@@ -49,7 +49,7 @@ public class Program
             .UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration
                 .ReadFrom.Configuration(hostingContext.Configuration)
                 .Enrich.FromLogContext()
-                .WriteTo.File("../_api.txt")
+                .WriteTo.File("../_logs-api.txt")
                 .WriteTo.Console(theme: AnsiConsoleTheme.Code)
             )
             .ConfigureWebHostDefaults(webBuilder =>

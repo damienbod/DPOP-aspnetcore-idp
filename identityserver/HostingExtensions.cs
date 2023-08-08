@@ -3,7 +3,9 @@ using IdentityServer.Data;
 using IdentityServer.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Logging;
 using Serilog;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace IdentityServer;
 
@@ -52,7 +54,9 @@ internal static class HostingExtensions
     }
     
     public static WebApplication ConfigurePipeline(this WebApplication app)
-    { 
+    {
+        IdentityModelEventSource.ShowPII = true;
+        
         app.UseSerilogRequestLogging();
     
         if (app.Environment.IsDevelopment())

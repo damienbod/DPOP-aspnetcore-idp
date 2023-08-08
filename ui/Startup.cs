@@ -61,13 +61,25 @@ public class Startup
             };
         });
 
-        //var ecdsaCertificate = new X509Certificate2(
-        //        Path.Combine(_environment.ContentRootPath, "cert_ecdsa384.pfx"), "1234");
+        //var privatePem = File.ReadAllText(
+        //    Path.Combine(_environment.ContentRootPath, "ecdsa384-private.pem"));
+
+        //var publicPem = File.ReadAllText(
+        // Path.Combine(_environment.ContentRootPath, "ecdsa384-public.pem"));
+
+        //var ecdsaCertificate = X509Certificate2.CreateFromPem(
+        //       publicPem, privatePem);
         //ECDsaSecurityKey ecdsaCertificateKey
         //    = new ECDsaSecurityKey(ecdsaCertificate.GetECDsaPrivateKey());
 
-        var rsaCertificate = new X509Certificate2(
-            Path.Combine(_environment.ContentRootPath, "cert_rsa512.pfx"), "1234");
+        var privatePem = File.ReadAllText(
+            Path.Combine(_environment.ContentRootPath, "rsa256-private.pem"));
+
+        var publicPem = File.ReadAllText(
+         Path.Combine(_environment.ContentRootPath, "rsa256-public.pem"));
+
+        var rsaCertificate = X509Certificate2.CreateFromPem(
+               publicPem, privatePem);
         RsaSecurityKey rsaCertificateKey
             = new RsaSecurityKey(rsaCertificate.GetRSAPrivateKey());
 
@@ -80,13 +92,15 @@ public class Startup
             //jwk.Alg = "PS256";
             //options.DPoPJsonWebKey = JsonSerializer.Serialize(jwk);
 
+            var jwk = JsonWebKeyConverter.ConvertFromSecurityKey(rsaCertificateKey);
+            jwk.Alg = "PS256";
+            options.DPoPJsonWebKey = JsonSerializer.Serialize(jwk);
+
+            // 401 bug, to fix
             //var jwk = JsonWebKeyConverter.ConvertFromSecurityKey(ecdsaCertificateKey);
             //jwk.Alg = "ES384";
             //options.DPoPJsonWebKey = JsonSerializer.Serialize(jwk);
 
-            var jwk = JsonWebKeyConverter.ConvertFromSecurityKey(rsaCertificateKey);
-            jwk.Alg = "PS512";
-            options.DPoPJsonWebKey = JsonSerializer.Serialize(jwk);
         });
 
         services.AddUserAccessTokenHttpClient("dpop-api-client", configureClient: client =>
