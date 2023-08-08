@@ -1,3 +1,5 @@
 /.vs
 **/bin/
 **/obj/
+/_api.txt
+/_webCodeFlowPkceClient.txt
