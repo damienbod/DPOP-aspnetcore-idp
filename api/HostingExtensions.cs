@@ -1,36 +1,21 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Logging;
+using Microsoft.OpenApi.Models;
 using Serilog;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Api;
 
-public class Startup
+internal static class HostingExtensions
 {
-    public Startup(IConfiguration configuration)
+    private static IWebHostEnvironment? _env;
+    public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
-        Configuration = configuration;
-    }
+        var services = builder.Services;
+        var configuration = builder.Configuration;
+        _env = builder.Environment;
 
-    public IConfiguration Configuration { get; }
-   
-    public Startup(IWebHostEnvironment env)
-    {
-        JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
-
-        var builder = new ConfigurationBuilder()
-            .SetBasePath(env.ContentRootPath)
-            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-            .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
-
-        builder.AddEnvironmentVariables();
-        Configuration = builder.Build();
-    }
-
-    public void ConfigureServices(IServiceCollection services)
-    {
-        var stsServer = Configuration["StsServer"];
+        var stsServer = configuration["StsServer"];
 
         services.AddAuthentication("dpoptokenscheme")
             .AddJwtBearer("dpoptokenscheme", options =>
@@ -44,7 +29,7 @@ public class Startup
 
         services.ConfigureDPoPTokensForScheme("dpoptokenscheme");
 
-        services.AddAuthorization(options =>
+        builder.Services.AddAuthorization(options =>
             options.AddPolicy("protectedScope", policy =>
             {
                 policy.RequireClaim("scope", "scope-dpop");
@@ -89,19 +74,26 @@ public class Startup
         });
 
         services.AddControllers();
-    }
 
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        return builder.Build();
+    }
+    
+    public static WebApplication ConfigurePipeline(this WebApplication app)
     {
         IdentityModelEventSource.ShowPII = true;
         JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
         app.UseSerilogRequestLogging();
+    
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseDeveloperExceptionPage();
+        }
 
-        app.UseSecurityHeaders(
-            SecurityHeadersDefinitions.GetHeaderPolicyCollection(env.IsDevelopment()));
+        app.UseSecurityHeaders(SecurityHeadersDefinitions
+            .GetHeaderPolicyCollection(_env!.IsDevelopment()));
 
-        if (env.IsDevelopment())
+        if (_env!.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
 
@@ -117,9 +109,9 @@ public class Startup
         app.UseAuthentication();
         app.UseAuthorization();
 
-        app.UseEndpoints(endpoints =>
-        {
-            endpoints.MapControllers().RequireAuthorization();
-        });
+        app.MapControllers()
+            .RequireAuthorization();
+
+        return app;
     }
 }
