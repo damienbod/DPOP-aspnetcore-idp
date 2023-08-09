@@ -42,7 +42,7 @@ class Program
             File.WriteAllText("ecdsa384-private.pem", pemPrivateKey);
         }
 
-        Console.WriteLine("created");
+        Console.WriteLine("created, keys are in the bin folder");
     }
 
     public static X509Certificate2 CreateRsaCertificate(string dnsName, int validityPeriodInYears)
