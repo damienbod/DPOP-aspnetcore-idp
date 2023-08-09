@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace WebCodeFlowPkceClient.Pages;
 
@@ -7,6 +9,9 @@ namespace WebCodeFlowPkceClient.Pages;
 public class IndexModel : PageModel
 {
     private readonly IHttpClientFactory _httpClientFactory;
+
+    [BindProperty]
+    public string? ApiData { get; set; }
 
     public IndexModel(IHttpClientFactory httpClientFactory)
     {
@@ -16,6 +21,6 @@ public class IndexModel : PageModel
     public async Task OnGetAsync()
     {
         var client = _httpClientFactory.CreateClient("dpop-api-client");
-        await client.GetStringAsync("api/values");
+        ApiData = await client.GetStringAsync("api/values");
     }
 }
