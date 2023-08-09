@@ -22,8 +22,6 @@ class Program
         var rsaCert = CreateRsaCertificate("localhost", 10);
         var ecdsaCert = CreateECDsaCertificate("localhost", 10);
 
-        var iec = sp.GetService<ImportExportCertificate>();
-
         var pemPublicRsaKey = _iec.PemExportPublicKeyCertificate(rsaCert);
         File.WriteAllText("rsa256-public.pem", pemPublicRsaKey);
 
