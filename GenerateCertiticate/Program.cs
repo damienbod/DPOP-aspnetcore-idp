@@ -73,7 +73,7 @@ class Program
             // OidLookup.TimeStamping  
         };
 
-        var certificate = _cc.NewRsaSelfSignedCertificate(
+        var certificate = _cc!.NewRsaSelfSignedCertificate(
             new DistinguishedName { CommonName = dnsName },
             basicConstraints,
             new ValidityPeriod
@@ -122,7 +122,7 @@ class Program
             // OidLookup.TimeStamping 
         };
 
-        var certificate = _cc.NewECDsaSelfSignedCertificate(
+        var certificate = _cc!.NewECDsaSelfSignedCertificate(
             new DistinguishedName { CommonName = dnsName },
             basicConstraints,
             new ValidityPeriod

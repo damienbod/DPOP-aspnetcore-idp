@@ -12,7 +12,7 @@ public class ConfigureJwtBearerOptions : IPostConfigureOptions<JwtBearerOptions>
         _configScheme = configScheme;
     }
 
-    public void PostConfigure(string name, JwtBearerOptions options)
+    public void PostConfigure(string? name, JwtBearerOptions options)
     {
         if (_configScheme == name)
         {

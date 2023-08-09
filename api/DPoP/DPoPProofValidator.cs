@@ -208,7 +208,7 @@ public class DPoPProofValidator
     /// </summary>
     protected virtual async Task ValidatePayloadAsync(DPoPProofValidatonContext context, DPoPProofValidatonResult result)
     {
-        if (result.Payload.TryGetValue(JwtClaimTypes.DPoPAccessTokenHash, out var ath))
+        if (result.Payload!.TryGetValue(JwtClaimTypes.DPoPAccessTokenHash, out var ath))
         {
             result.AccessTokenHash = ath as string;
         }
@@ -222,7 +222,7 @@ public class DPoPProofValidator
 
         using (var sha = SHA256.Create())
         {
-            var bytes = Encoding.UTF8.GetBytes(context.AccessToken);
+            var bytes = Encoding.UTF8.GetBytes(context.AccessToken!);
             var hash = sha.ComputeHash(bytes);
 
             var accessTokenHash = Base64Url.Encode(hash);
@@ -260,15 +260,15 @@ public class DPoPProofValidator
             return;
         }
 
-        if (result.Payload.TryGetValue(JwtClaimTypes.IssuedAt, out var iat))
+        if (result.Payload.TryGetValue(JwtClaimTypes.IssuedAt, out object? iat))
         {
-            if (iat is int)
+            if (iat is int iatint)
             {
-                result.IssuedAt = (int) iat;
+                result.IssuedAt = iatint;
             }
-            if (iat is long)
+            if (iat is long iatlong)
             {
-                result.IssuedAt = (long) iat;
+                result.IssuedAt = iatlong;
             }
         }
 
@@ -307,7 +307,7 @@ public class DPoPProofValidator
     {
         var dpopOptions = OptionsMonitor.Get(context.Scheme);
 
-        if (await ReplayCache.ExistsAsync(ReplayCachePurpose, result.TokenId))
+        if (await ReplayCache.ExistsAsync(ReplayCachePurpose, result.TokenId!))
         {
             result.IsError = true;
             result.ErrorDescription = "Detected DPoP proof token replay.";
@@ -331,7 +331,7 @@ public class DPoPProofValidator
         // longer than the likelyhood of proof token expiration, which is done before replay
         skew *= 2;
         var cacheDuration = dpopOptions.ProofTokenValidityDuration + skew;
-        await ReplayCache.AddAsync(ReplayCachePurpose, result.TokenId, DateTimeOffset.UtcNow.Add(cacheDuration));
+        await ReplayCache.AddAsync(ReplayCachePurpose, result.TokenId!, DateTimeOffset.UtcNow.Add(cacheDuration));
     }
 
     /// <summary>
@@ -369,7 +369,7 @@ public class DPoPProofValidator
     {
         var dpopOptions = OptionsMonitor.Get(context.Scheme);
 
-        if (IsExpired(context, result, dpopOptions.ClientClockSkew, result.IssuedAt.Value))
+        if (IsExpired(context, result, dpopOptions.ClientClockSkew, result.IssuedAt!.Value))
         {
             result.IsError = true;
             result.ErrorDescription = "Invalid 'iat' value.";
@@ -435,7 +435,7 @@ public class DPoPProofValidator
     {
         try
         {
-            var value = DataProtector.Unprotect(result.Nonce);
+            var value = DataProtector.Unprotect(result.Nonce!);
             if (Int64.TryParse(value, out long iat))
             {
                 return ValueTask.FromResult(iat);

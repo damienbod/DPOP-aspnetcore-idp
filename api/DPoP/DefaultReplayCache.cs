@@ -28,7 +28,7 @@ public class DefaultReplayCache : IReplayCache
             AbsoluteExpiration = expiration
         };
 
-        await _cache.SetAsync(Prefix + purpose + handle, new byte[] { }, options);
+        await _cache.SetAsync(Prefix + purpose + handle, Array.Empty<byte>(), options);
     }
 
     /// <inheritdoc />
