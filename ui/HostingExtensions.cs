@@ -1,25 +1,22 @@
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Cryptography.X509Certificates;
-using System.Text.Json;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Cryptography.X509Certificates;
+using System.Text.Json;
 
 namespace WebCodeFlowPkceClient;
 
-public class Startup
+internal static class HostingExtensions
 {
-    private readonly IWebHostEnvironment _environment;
-    public IConfiguration Configuration { get; }
-
-    public Startup(IConfiguration configuration, IWebHostEnvironment env)
+    private static IWebHostEnvironment? _env;
+    public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
-        Configuration = configuration;
-        _environment = env;
-    }
+        var services = builder.Services;
+        var configuration = builder.Configuration;
+        _env = builder.Environment;
 
-    public void ConfigureServices(IServiceCollection services)
-    {
         JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
 
         services.AddAuthentication(options =>
@@ -60,9 +57,9 @@ public class Startup
             };
         });
 
-        var privatePem = File.ReadAllText(Path.Combine(_environment.ContentRootPath, 
+        var privatePem = File.ReadAllText(Path.Combine(_env.ContentRootPath,
             "ecdsa384-private.pem"));
-        var publicPem = File.ReadAllText(Path.Combine(_environment.ContentRootPath, 
+        var publicPem = File.ReadAllText(Path.Combine(_env.ContentRootPath,
             "ecdsa384-public.pem"));
         var ecdsaCertificate = X509Certificate2.CreateFromPem(publicPem, privatePem);
         var ecdsaCertificateKey = new ECDsaSecurityKey(ecdsaCertificate.GetECDsaPrivateKey());
@@ -98,14 +95,18 @@ public class Startup
         });
 
         services.AddRazorPages();
-    }
 
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        return builder.Build();
+    }
+    
+    public static WebApplication ConfigurePipeline(this WebApplication app)
     {
         IdentityModelEventSource.ShowPII = true;
         JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
-        if (env.IsDevelopment())
+        app.UseSerilogRequestLogging();
+
+        if (_env!.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
         }
@@ -123,9 +124,8 @@ public class Startup
         app.UseAuthentication();
         app.UseAuthorization();
 
-        app.UseEndpoints(endpoints =>
-        {
-            endpoints.MapRazorPages();
-        });
+        app.MapRazorPages();
+
+        return app;
     }
 }
