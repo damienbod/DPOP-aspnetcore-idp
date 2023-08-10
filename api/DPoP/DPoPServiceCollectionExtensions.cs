@@ -15,7 +15,6 @@ static class DPoPServiceCollectionExtensions
         services.AddTransient<IReplayCache, DefaultReplayCache>();
 
         services.AddSingleton<IPostConfigureOptions<JwtBearerOptions>>(new ConfigureJwtBearerOptions(scheme));
-        
 
         return services;
     }
