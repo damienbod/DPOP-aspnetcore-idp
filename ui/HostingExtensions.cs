@@ -17,6 +17,8 @@ internal static class HostingExtensions
         var configuration = builder.Configuration;
         _env = builder.Environment;
 
+        JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
         services.AddAuthentication(options =>
         {
             options.DefaultScheme = "cookie";
@@ -100,7 +102,6 @@ internal static class HostingExtensions
     public static WebApplication ConfigurePipeline(this WebApplication app)
     {
         IdentityModelEventSource.ShowPII = true;
-        JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
         app.UseSerilogRequestLogging();
 

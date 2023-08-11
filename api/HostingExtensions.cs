@@ -15,6 +15,8 @@ internal static class HostingExtensions
         var configuration = builder.Configuration;
         _env = builder.Environment;
 
+        JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
         var stsServer = configuration["StsServer"];
 
         services.AddAuthentication("dpoptokenscheme")
@@ -81,7 +83,6 @@ internal static class HostingExtensions
     public static WebApplication ConfigurePipeline(this WebApplication app)
     {
         IdentityModelEventSource.ShowPII = true;
-        JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
         app.UseSerilogRequestLogging();
     

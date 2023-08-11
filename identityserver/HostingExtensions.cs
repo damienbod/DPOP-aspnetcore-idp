@@ -13,6 +13,8 @@ internal static class HostingExtensions
 {
     public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
+        JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
         builder.Services.AddRazorPages();
 
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
