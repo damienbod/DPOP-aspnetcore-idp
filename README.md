@@ -14,10 +14,6 @@
 
 https://datatracker.ietf.org/doc/html/draft-ietf-oauth-dpop
 
-https://learn.microsoft.com/en-us/entra/msal/dotnet/advanced/proof-of-possession-tokens?view=msal-dotnet-latest
-
-https://darutk.medium.com/illustrated-dpop-oauth-access-token-security-enhancement-801680d761ff
-
 https://github.com/DuendeSoftware
 
 https://github.com/DuendeSoftware/Samples/tree/main/IdentityServer/v6/DPoP
@@ -27,5 +23,7 @@ https://github.com/DuendeSoftware/IdentityServer.Templates
 https://docs.duendesoftware.com/identityserver/v6/tokens/pop/dpop/
 
 https://developer.okta.com/docs/guides/dpop/main/#build-the-request
+
+https://darutk.medium.com/illustrated-dpop-oauth-access-token-security-enhancement-801680d761ff
 
 https://learn.microsoft.com/en-us/entra/msal/dotnet/advanced/proof-of-possession-tokens
