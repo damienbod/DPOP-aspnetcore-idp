@@ -2,6 +2,8 @@
 
 [![.NET](https://github.com/damienbod/DPOP-aspnetcore-idp/actions/workflows/dotnet.yml/badge.svg)](https://github.com/damienbod/DPOP-aspnetcore-idp/actions/workflows/dotnet.yml)
 
+![setup](https://github.com/damienbod/DPOP-aspnetcore-idp/blob/main/images/dpop_aspnetcore_02.png)
+
 ### Debugging
 
 - Identity provider/STS: https://localhost:5001
