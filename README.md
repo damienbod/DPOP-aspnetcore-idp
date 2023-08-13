@@ -23,3 +23,9 @@ https://github.com/DuendeSoftware
 https://github.com/DuendeSoftware/Samples/tree/main/IdentityServer/v6/DPoP
 
 https://github.com/DuendeSoftware/IdentityServer.Templates
+
+https://docs.duendesoftware.com/identityserver/v6/tokens/pop/dpop/
+
+https://developer.okta.com/docs/guides/dpop/main/#build-the-request
+
+https://learn.microsoft.com/en-us/entra/msal/dotnet/advanced/proof-of-possession-tokens
