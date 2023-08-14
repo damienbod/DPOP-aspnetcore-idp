@@ -2,6 +2,8 @@
 
 [![.NET](https://github.com/damienbod/DPOP-aspnetcore-idp/actions/workflows/dotnet.yml/badge.svg)](https://github.com/damienbod/DPOP-aspnetcore-idp/actions/workflows/dotnet.yml)
 
+[Securing APIs using ASP.NET Core and OAuth 2.0 DPoP](https://damienbod.com/2023/08/14/securing-apis-using-asp-net-core-and-oauth-2-0-dpop/)
+
 ![setup](https://github.com/damienbod/DPOP-aspnetcore-idp/blob/main/images/dpop_aspnetcore_02.png)
 
 ### Debugging
