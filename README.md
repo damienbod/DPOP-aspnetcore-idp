@@ -12,6 +12,10 @@
 - API https://localhost:5005
 - UI https://localhost:5007
 
+## History
+
+2023-08-28 Updated packages
+
 ## Links
 
 https://datatracker.ietf.org/doc/html/draft-ietf-oauth-dpop
