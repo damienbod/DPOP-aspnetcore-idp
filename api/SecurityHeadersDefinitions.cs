@@ -6,7 +6,6 @@ public static class SecurityHeadersDefinitions
     {
         var policy = new HeaderPolicyCollection()
             .AddFrameOptionsDeny()
-            .AddXssProtectionBlock()
             .AddContentTypeOptionsNoSniff()
             .AddReferrerPolicyStrictOriginWhenCrossOrigin()
             .RemoveServerHeader()
@@ -32,6 +31,8 @@ public static class SecurityHeadersDefinitions
             });
 
         AddCspHstsDefinitions(isDev, policy);
+
+        policy.ApplyDocumentHeadersToAllResponses();
 
         return policy;
     }
