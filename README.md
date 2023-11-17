@@ -14,6 +14,7 @@
 
 ## History
 
+- 2023-11-17 Updated .NET 8
 - 2023-11-03 Updated packages, fixed security headers
 - 2023-10-10 Updated packages
 - 2023-08-28 Updated packages
