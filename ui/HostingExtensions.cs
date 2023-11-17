@@ -18,8 +18,6 @@ internal static class HostingExtensions
         var configuration = builder.Configuration;
         _env = builder.Environment;
 
-        JsonWebTokenHandler.DefaultInboundClaimTypeMap.Clear();
-
         services.AddAuthentication(options =>
         {
             options.DefaultScheme = "cookie";
