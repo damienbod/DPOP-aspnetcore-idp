@@ -20,7 +20,7 @@
 
 ## Links
 
-https://datatracker.ietf.org/doc/html/draft-ietf-oauth-dpop
+[https://datatracker.ietf.org/doc/html/draft-ietf-oauth-dpop](https://datatracker.ietf.org/doc/html/rfc9449)
 
 https://github.com/DuendeSoftware
 
