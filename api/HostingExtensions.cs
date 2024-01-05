@@ -31,7 +31,7 @@ internal static class HostingExtensions
 
         services.ConfigureDPoPTokensForScheme("dpoptokenscheme");
 
-        builder.Services.AddAuthorization(options =>
+        services.AddAuthorization(options =>
             options.AddPolicy("protectedScope", policy =>
             {
                 policy.RequireClaim("scope", "scope-dpop");
