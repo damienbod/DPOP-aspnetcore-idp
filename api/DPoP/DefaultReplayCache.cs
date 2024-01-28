@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
+using System;
+using System.Threading.Tasks;
 
 namespace Api;
 
@@ -28,7 +30,7 @@ public class DefaultReplayCache : IReplayCache
             AbsoluteExpiration = expiration
         };
 
-        await _cache.SetAsync(Prefix + purpose + handle, Array.Empty<byte>(), options);
+        await _cache.SetAsync(Prefix + purpose + handle, new byte[] { }, options);
     }
 
     /// <inheritdoc />

@@ -1,11 +1,16 @@
 using IdentityModel;
 using Microsoft.AspNetCore.DataProtection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace Api;
 
@@ -125,7 +130,7 @@ public class DPoPProofValidator
             return Task.CompletedTask;
         }
 
-        if (!token.TryGetHeaderValue<IDictionary<string, object>>(JwtClaimTypes.JsonWebKey, out var jwkValues))
+        if (!token.TryGetHeaderValue<JsonElement>(JwtClaimTypes.JsonWebKey, out var jwkValues))
         {
             result.IsError = true;
             result.ErrorDescription = "Invalid 'jwk' value.";
@@ -164,9 +169,9 @@ public class DPoPProofValidator
     /// <summary>
     /// Validates the signature.
     /// </summary>
-    protected virtual Task ValidateSignatureAsync(DPoPProofValidatonContext context, DPoPProofValidatonResult result)
+    protected virtual async Task ValidateSignatureAsync(DPoPProofValidatonContext context, DPoPProofValidatonResult result)
     {
-        TokenValidationResult tokenValidationResult;
+        TokenValidationResult? tokenValidationResult = null;
 
         try
         {
@@ -180,27 +185,26 @@ public class DPoPProofValidator
             };
 
             var handler = new JsonWebTokenHandler();
-            tokenValidationResult = handler.ValidateToken(context.ProofToken, tvp);
+            tokenValidationResult = await handler.ValidateTokenAsync(context.ProofToken, tvp);
         }
         catch (Exception ex)
         {
             Logger.LogDebug("Error parsing DPoP token: {error}", ex.Message);
             result.IsError = true;
             result.ErrorDescription = "Invalid signature on DPoP token.";
-            return Task.CompletedTask;
         }
 
-        if (tokenValidationResult.Exception != null)
+        if (tokenValidationResult?.Exception != null)
         {
             Logger.LogDebug("Error parsing DPoP token: {error}", tokenValidationResult.Exception.Message);
             result.IsError = true;
             result.ErrorDescription = "Invalid signature on DPoP token.";
-            return Task.CompletedTask;
         }
 
-        result.Payload = tokenValidationResult.Claims;
-
-        return Task.CompletedTask;
+        if (tokenValidationResult != null)
+        {
+            result.Payload = tokenValidationResult.Claims;
+        }
     }
 
     /// <summary>
@@ -208,7 +212,14 @@ public class DPoPProofValidator
     /// </summary>
     protected virtual async Task ValidatePayloadAsync(DPoPProofValidatonContext context, DPoPProofValidatonResult result)
     {
-        if (result.Payload!.TryGetValue(JwtClaimTypes.DPoPAccessTokenHash, out var ath))
+        if(result.Payload is null )
+        {
+            result.IsError = true;
+            result.ErrorDescription = "Missing payload";
+            return;
+        }
+
+        if (result.Payload.TryGetValue(JwtClaimTypes.DPoPAccessTokenHash, out var ath))
         {
             result.AccessTokenHash = ath as string;
         }
@@ -222,7 +233,7 @@ public class DPoPProofValidator
 
         using (var sha = SHA256.Create())
         {
-            var bytes = Encoding.UTF8.GetBytes(context.AccessToken!);
+            var bytes = Encoding.UTF8.GetBytes(context.AccessToken);
             var hash = sha.ComputeHash(bytes);
 
             var accessTokenHash = Base64Url.Encode(hash);
@@ -260,15 +271,15 @@ public class DPoPProofValidator
             return;
         }
 
-        if (result.Payload.TryGetValue(JwtClaimTypes.IssuedAt, out object? iat))
+        if (result.Payload.TryGetValue(JwtClaimTypes.IssuedAt, out var iat))
         {
-            if (iat is int iatint)
+            if (iat is int)
             {
-                result.IssuedAt = iatint;
+                result.IssuedAt = (int) iat;
             }
-            if (iat is long iatlong)
+            if (iat is long)
             {
-                result.IssuedAt = iatlong;
+                result.IssuedAt = (long) iat;
             }
         }
 
@@ -307,7 +318,7 @@ public class DPoPProofValidator
     {
         var dpopOptions = OptionsMonitor.Get(context.Scheme);
 
-        if (await ReplayCache.ExistsAsync(ReplayCachePurpose, result.TokenId!))
+        if (await ReplayCache.ExistsAsync(ReplayCachePurpose, result.TokenId!)) // jti is required by an earlier validation
         {
             result.IsError = true;
             result.ErrorDescription = "Detected DPoP proof token replay.";
@@ -369,7 +380,7 @@ public class DPoPProofValidator
     {
         var dpopOptions = OptionsMonitor.Get(context.Scheme);
 
-        if (IsExpired(context, result, dpopOptions.ClientClockSkew, result.IssuedAt!.Value))
+        if (IsExpired(context, result, dpopOptions.ClientClockSkew, result.IssuedAt!.Value)) // iat is required by an earlier validation
         {
             result.IsError = true;
             result.ErrorDescription = "Invalid 'iat' value.";
@@ -435,7 +446,7 @@ public class DPoPProofValidator
     {
         try
         {
-            var value = DataProtector.Unprotect(result.Nonce!);
+            var value = DataProtector.Unprotect(result.Nonce!); // nonce is required by an earlier validation
             if (Int64.TryParse(value, out long iat))
             {
                 return ValueTask.FromResult(iat);
