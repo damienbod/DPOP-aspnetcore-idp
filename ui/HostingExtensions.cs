@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
@@ -16,8 +17,6 @@ internal static class HostingExtensions
         var services = builder.Services;
         var configuration = builder.Configuration;
         _env = builder.Environment;
-
-        JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
         services.AddAuthentication(options =>
         {
@@ -102,6 +101,7 @@ internal static class HostingExtensions
     public static WebApplication ConfigurePipeline(this WebApplication app)
     {
         IdentityModelEventSource.ShowPII = true;
+        JsonWebTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
         app.UseSerilogRequestLogging();
 

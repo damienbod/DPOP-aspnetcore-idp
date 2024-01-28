@@ -1,4 +1,6 @@
-﻿namespace Api;
+﻿using System;
+
+namespace Api;
 
 public class DPoPOptions
 {

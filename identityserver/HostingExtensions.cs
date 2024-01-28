@@ -3,6 +3,7 @@ using IdentityServer.Data;
 using IdentityServer.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Logging;
 using Serilog;
 using System.IdentityModel.Tokens.Jwt;
@@ -13,7 +14,7 @@ internal static class HostingExtensions
 {
     public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
-        JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+        JsonWebTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
         builder.Services.AddRazorPages();
 
