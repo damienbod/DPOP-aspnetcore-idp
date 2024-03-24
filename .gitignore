@@ -4,3 +4,8 @@
 /_api.txt
 /_webCodeFlowPkceClient.txt
 /_logs-**
+
+/identityserver/keys
+/identityserver/AspIdUsers**
+/identityserver/AspIdUsers.db-shm
+/identityserver/AspIdUsers.db-wal
