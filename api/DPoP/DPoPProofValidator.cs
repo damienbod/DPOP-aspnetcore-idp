@@ -1,16 +1,11 @@
 using IdentityModel;
 using Microsoft.AspNetCore.DataProtection;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace Api;
 
@@ -212,7 +207,7 @@ public class DPoPProofValidator
     /// </summary>
     protected virtual async Task ValidatePayloadAsync(DPoPProofValidatonContext context, DPoPProofValidatonResult result)
     {
-        if(result.Payload is null )
+        if (result.Payload is null)
         {
             result.IsError = true;
             result.ErrorDescription = "Missing payload";
@@ -275,11 +270,11 @@ public class DPoPProofValidator
         {
             if (iat is int)
             {
-                result.IssuedAt = (int) iat;
+                result.IssuedAt = (int)iat;
             }
             if (iat is long)
             {
-                result.IssuedAt = (long) iat;
+                result.IssuedAt = (long)iat;
             }
         }
 
@@ -467,7 +462,7 @@ public class DPoPProofValidator
     protected virtual bool IsExpired(DPoPProofValidatonContext context, DPoPProofValidatonResult result, TimeSpan clockSkew, long issuedAtTime)
     {
         var now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-        var start = now + (int) clockSkew.TotalSeconds;
+        var start = now + (int)clockSkew.TotalSeconds;
         if (start < issuedAtTime)
         {
             var diff = issuedAtTime - now;
@@ -476,8 +471,8 @@ public class DPoPProofValidator
         }
 
         var dpopOptions = OptionsMonitor.Get(context.Scheme);
-        var expiration = issuedAtTime + (int) dpopOptions.ProofTokenValidityDuration.TotalSeconds;
-        var end = now - (int) clockSkew.TotalSeconds;
+        var expiration = issuedAtTime + (int)dpopOptions.ProofTokenValidityDuration.TotalSeconds;
+        var end = now - (int)clockSkew.TotalSeconds;
         if (expiration < end)
         {
             var diff = now - expiration;
