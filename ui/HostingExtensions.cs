@@ -10,12 +10,10 @@ namespace WebCodeFlowPkceClient;
 
 internal static class HostingExtensions
 {
-    private static IWebHostEnvironment? _env;
     public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
         var services = builder.Services;
         var configuration = builder.Configuration;
-        _env = builder.Environment;
 
         services.AddAuthentication(options =>
         {
@@ -55,9 +53,9 @@ internal static class HostingExtensions
             };
         });
 
-        var privatePem = File.ReadAllText(Path.Combine(_env.ContentRootPath,
+        var privatePem = File.ReadAllText(Path.Combine(builder.Environment.ContentRootPath,
             "ecdsa384-private.pem"));
-        var publicPem = File.ReadAllText(Path.Combine(_env.ContentRootPath,
+        var publicPem = File.ReadAllText(Path.Combine(builder.Environment.ContentRootPath,
             "ecdsa384-public.pem"));
         var ecdsaCertificate = X509Certificate2.CreateFromPem(publicPem, privatePem);
         var ecdsaCertificateKey = new ECDsaSecurityKey(ecdsaCertificate.GetECDsaPrivateKey());
@@ -104,7 +102,7 @@ internal static class HostingExtensions
 
         app.UseSerilogRequestLogging();
 
-        if (_env!.IsDevelopment())
+        if (app.Environment.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
         }
