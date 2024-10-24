@@ -9,7 +9,7 @@
   <ItemGroup>
     <PackageReference Include="IdentityModel" Version="7.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.10" />  
-    <PackageReference Include="NetEscapades.AspNetCore.SecurityHeaders" Version="0.24.0" />
+    <PackageReference Include="NetEscapades.AspNetCore.SecurityHeaders" Version="1.0.0-preview.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.9.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="8.0.3" />
     <PackageReference Include="Serilog.Extensions.Logging" Version="8.0.0" />

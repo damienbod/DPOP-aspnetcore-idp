@@ -2,18 +2,23 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.OpenApi.Models;
+using NetEscapades.AspNetCore.SecurityHeaders.Infrastructure;
 using Serilog;
 
 namespace Api;
 
 internal static class HostingExtensions
 {
-    private static IWebHostEnvironment? _env;
     public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
         var services = builder.Services;
         var configuration = builder.Configuration;
-        _env = builder.Environment;
+
+        builder.Services.AddSecurityHeaderPolicies()
+        .SetPolicySelector((PolicySelectorContext ctx) =>
+        {
+            return SecurityHeadersDefinitions.GetHeaderPolicyCollection(builder.Environment.IsDevelopment());
+        });
 
         var stsServer = configuration["StsServer"];
 
@@ -90,10 +95,9 @@ internal static class HostingExtensions
             app.UseDeveloperExceptionPage();
         }
 
-        app.UseSecurityHeaders(SecurityHeadersDefinitions
-            .GetHeaderPolicyCollection(_env!.IsDevelopment()));
+        app.UseSecurityHeaders();
 
-        if (_env!.IsDevelopment())
+        if (app.Environment.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
 
