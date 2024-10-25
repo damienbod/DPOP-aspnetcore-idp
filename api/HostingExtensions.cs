@@ -14,10 +14,29 @@ internal static class HostingExtensions
         var services = builder.Services;
         var configuration = builder.Configuration;
 
+        var deploySwaggerUI = builder.Environment.IsDevelopment();
+
         builder.Services.AddSecurityHeaderPolicies()
         .SetPolicySelector((PolicySelectorContext ctx) =>
         {
-            return SecurityHeadersDefinitions.GetHeaderPolicyCollection(builder.Environment.IsDevelopment());
+            // sum is weak security headers due to Swagger UI deployment
+            // should only use in development
+            if (deploySwaggerUI)
+            {
+                // Weakened security headers for Swagger UI
+                if (ctx.HttpContext.Request.Path.StartsWithSegments("/swagger"))
+                {
+                    return SecurityHeadersDefinitionsSwagger.GetHeaderPolicyCollection(builder.Environment.IsDevelopment());
+                }
+
+                // Strict security headers
+                return SecurityHeadersDefinitionsAPI.GetHeaderPolicyCollection(builder.Environment.IsDevelopment());
+            }
+            // Strict security headers for production
+            else
+            {
+                return SecurityHeadersDefinitionsAPI.GetHeaderPolicyCollection(builder.Environment.IsDevelopment());
+            }
         });
 
         var stsServer = configuration["StsServer"];
