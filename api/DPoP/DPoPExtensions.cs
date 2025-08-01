@@ -1,4 +1,4 @@
-using IdentityModel;
+using Duende.IdentityModel;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.IdentityModel.Tokens;
 using System.Diagnostics.CodeAnalysis;
