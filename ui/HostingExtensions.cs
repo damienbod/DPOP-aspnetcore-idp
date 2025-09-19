@@ -1,3 +1,5 @@
+using Duende.AccessTokenManagement.DPoP;
+using Duende.AccessTokenManagement.OpenIdConnect;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
@@ -84,7 +86,7 @@ internal static class HostingExtensions
 
             var jwk = JsonWebKeyConverter.ConvertFromSecurityKey(ecdsaCertificateKey);
             jwk.Alg = "ES384";
-            options.DPoPJsonWebKey = JsonSerializer.Serialize(jwk);
+            options.DPoPJsonWebKey = DPoPProofKey.ParseOrDefault(JsonSerializer.Serialize(jwk));
         });
 
         services.AddUserAccessTokenHttpClient("dpop-api-client", configureClient: client =>
