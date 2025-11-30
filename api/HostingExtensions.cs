@@ -1,7 +1,5 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Logging;
-using Microsoft.OpenApi.Models;
 using NetEscapades.AspNetCore.SecurityHeaders.Infrastructure;
 using Serilog;
 
@@ -48,53 +46,30 @@ internal static class HostingExtensions
                 options.TokenValidationParameters.ValidateAudience = false;
                 options.MapInboundClaims = false;
 
-                options.TokenValidationParameters.ValidTypes = new[] { "at+jwt" };
+                options.TokenValidationParameters.ValidTypes = ["at+jwt"];
             });
 
         services.ConfigureDPoPTokensForScheme("dpoptokenscheme");
 
-        services.AddAuthorization(options =>
-            options.AddPolicy("protectedScope", policy =>
+        services.AddAuthorizationBuilder()
+            .AddPolicy("protectedScope", policy =>
             {
                 policy.RequireClaim("scope", "scope-dpop");
-            })
-        );
+            });
 
-        services.AddSwaggerGen(c =>
+        builder.Services.AddOpenApi(options =>
         {
-            // add JWT Authentication
-            var securityScheme = new OpenApiSecurityScheme
-            {
-                Name = "JWT Authentication",
-                Description = "Enter JWT Bearer token **_only_**",
-                In = ParameterLocation.Header,
-                Type = SecuritySchemeType.Http,
-                Scheme = "bearer", // must be lower case
-                BearerFormat = "JWT",
-                Reference = new OpenApiReference
-                {
-                    Id = JwtBearerDefaults.AuthenticationScheme,
-                    Type = ReferenceType.SecurityScheme
-                }
-            };
-            c.AddSecurityDefinition(securityScheme.Reference.Id, securityScheme);
-            c.AddSecurityRequirement(new OpenApiSecurityRequirement
-            {
-                {securityScheme, Array.Empty<string>()}
-            });
-
-            c.SwaggerDoc("v1", new OpenApiInfo
-            {
-                Title = "DPOP API",
-                Version = "v1",
-                Description = "User API",
-                Contact = new OpenApiContact
-                {
-                    Name = "damienbod",
-                    Email = string.Empty,
-                    Url = new Uri("https://damienbod.com/"),
-                },
-            });
+            //options.UseTransformer((document, context, cancellationToken) =>
+            //{
+            //    document.Info = new()
+            //    {
+            //        Title = "My API",
+            //        Version = "v1",
+            //        Description = "API for Damien"
+            //    };
+            //    return Task.CompletedTask;
+            //});
+            options.AddDocumentTransformer<BearerSecuritySchemeTransformer>();
         });
 
         services.AddControllers();
@@ -116,17 +91,6 @@ internal static class HostingExtensions
 
         app.UseSecurityHeaders();
 
-        if (app.Environment.IsDevelopment())
-        {
-            app.UseDeveloperExceptionPage();
-
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1");
-            });
-        }
-
         app.UseRouting();
 
         app.UseAuthentication();
@@ -134,6 +98,18 @@ internal static class HostingExtensions
 
         app.MapControllers()
             .RequireAuthorization();
+
+        //app.MapOpenApi(); // /openapi/v1.json
+        app.MapOpenApi("/openapi/v1/openapi.json");
+        //app.MapOpenApi("/openapi/{documentName}/openapi.json");
+
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/openapi/v1/openapi.json", "v1");
+            });
+        }
 
         return app;
     }

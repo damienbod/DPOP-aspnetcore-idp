@@ -20,12 +20,28 @@ public class ConfigureJwtBearerOptions : IPostConfigureOptions<JwtBearerOptions>
             {
                 throw new Exception("EventsType on JwtBearerOptions must derive from DPoPJwtBearerEvents to work with the DPoP support.");
             }
-            if (options.Events != null && !typeof(DPoPJwtBearerEvents).IsAssignableFrom(options.Events.GetType()))
+            
+            // In ASP.NET Core 10.0+, the framework auto-creates a default JwtBearerEvents instance.
+            // If Events is set but is just the default JwtBearerEvents (not a custom derived type),
+            // we replace it with DPoPJwtBearerEvents. If it's a custom type that doesn't derive
+            // from DPoPJwtBearerEvents, we throw an error.
+            if (options.Events != null)
             {
-                throw new Exception("Events on JwtBearerOptions must derive from DPoPJwtBearerEvents to work with the DPoP support.");
+                var eventsType = options.Events.GetType();
+                
+                // If it's exactly JwtBearerEvents (the default), replace it with DPoPJwtBearerEvents
+                if (eventsType == typeof(JwtBearerEvents))
+                {
+                    options.Events = null!;
+                    options.EventsType = typeof(DPoPJwtBearerEvents);
+                }
+                // If it's a custom type that doesn't derive from DPoPJwtBearerEvents, throw error
+                else if (!typeof(DPoPJwtBearerEvents).IsAssignableFrom(eventsType))
+                {
+                    throw new Exception("Events on JwtBearerOptions must derive from DPoPJwtBearerEvents to work with the DPoP support.");
+                }
             }
-
-            if (options.Events == null && options.EventsType == null)
+            else if (options.EventsType == null)
             {
                 options.EventsType = typeof(DPoPJwtBearerEvents);
             }
