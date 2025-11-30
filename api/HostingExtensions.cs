@@ -91,6 +91,14 @@ internal static class HostingExtensions
 
         app.UseSecurityHeaders();
 
+        app.UseRouting();
+
+        app.UseAuthentication();
+        app.UseAuthorization();
+
+        app.MapControllers()
+            .RequireAuthorization();
+
         //app.MapOpenApi(); // /openapi/v1.json
         app.MapOpenApi("/openapi/v1/openapi.json");
         //app.MapOpenApi("/openapi/{documentName}/openapi.json");
@@ -102,14 +110,6 @@ internal static class HostingExtensions
                 options.SwaggerEndpoint("/openapi/v1/openapi.json", "v1");
             });
         }
-
-        app.UseRouting();
-
-        app.UseAuthentication();
-        app.UseAuthorization();
-
-        app.MapControllers()
-            .RequireAuthorization();
 
         return app;
     }
