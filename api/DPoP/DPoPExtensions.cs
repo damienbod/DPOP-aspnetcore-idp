@@ -1,6 +1,7 @@
 using Duende.IdentityModel;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.IdentityModel.Tokens;
+using System.Buffers.Text;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
@@ -73,7 +74,7 @@ static class DPoPExtensions
     /// </summary>
     public static string CreateThumbprint(this JsonWebKey jwk)
     {
-        var jkt = Base64Url.Encode(jwk.ComputeJwkThumbprint());
+        var jkt = Base64Url.EncodeToString(jwk.ComputeJwkThumbprint());
         return jkt;
     }
 }

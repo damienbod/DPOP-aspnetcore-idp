@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
+using System.Buffers.Text;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
@@ -231,7 +232,7 @@ public class DPoPProofValidator
             var bytes = Encoding.UTF8.GetBytes(context.AccessToken);
             var hash = sha.ComputeHash(bytes);
 
-            var accessTokenHash = Base64Url.Encode(hash);
+            var accessTokenHash = Base64Url.EncodeToString(hash);
             if (accessTokenHash != result.AccessTokenHash)
             {
                 result.IsError = true;
