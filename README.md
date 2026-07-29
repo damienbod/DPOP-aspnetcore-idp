@@ -14,6 +14,7 @@
 
 ## History
 
+- 2026-07-29 Updated packages, Duende V8
 - 2026-05-14 Updated packages
 - 2026-03-13 Updated packages
 - 2026-02-25 Updated packages
